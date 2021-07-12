@@ -25,7 +25,7 @@ NOTES:
 - dates format preferably is `yyyy-MM-dd`, but parsing depends on your local settings
 - dates should be in the following order: `start-date`, then `end-date`
 
-## OUTPUT
+## Output
 
 1. Raw data. JSON files of what APIs give back.
 2. CSVs. Data grouped by account ID and utility type.

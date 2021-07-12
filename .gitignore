@@ -56,5 +56,9 @@ src/bin/*
 src/export/*
 
 *.suo
+.vs
 /src/.vs
 /src/Properties/launchSettings.json
+
+bin
+obj
