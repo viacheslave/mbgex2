@@ -4,6 +4,8 @@
 		<OutputType>Exe</OutputType>
 		<RootNamespace>mbgex2</RootNamespace>
 		<TargetFramework>net5.0</TargetFramework>
+		<PublishSingleFile>true</PublishSingleFile>
+		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
 	</PropertyGroup>
 
 	<ItemGroup>
