@@ -11,11 +11,24 @@ This is v2, it should work with the latest [erc.megabank.ua](erc.megabank.ua) po
 
 ## Usage
 
+Export since `start-date` to last month inclusive:
 ```
-mbgex2.exe <username> <password> <date-from> <date-to>
+mbgex2.exe --export <username> <password> <start-date>
+```
 
-Example:
-mbgex2.exe user@mail.com pwd1 2019-01-01 2020-01-01
+Export since `start-date` to `end-date` inclusive:
+```
+mbgex2.exe --export <username> <password> <start-date> <end-date>
+```
+
+Export last month:
+```
+mbgex2.exe --export <username> <password>
+```
+
+Show last month:
+```
+mbgex2.exe <username> <password>
 ```
 
 NOTES:

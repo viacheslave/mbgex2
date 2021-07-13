@@ -18,7 +18,7 @@ namespace mbgex2
 			if (credentials is null)
 				throw new ArgumentNullException(nameof(credentials));
 
-      Logger.Out($"Logging in as {credentials.Login}");
+      Logger.Out($"Logging in as {credentials.Login} ...\n");
 
       var response = await new FlurlRequest(new Url("https://erc.megabank.ua/ua/node?destination=node"))
         .WithAutoRedirect(false)
