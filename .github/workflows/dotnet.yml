@@ -28,4 +28,4 @@ jobs:
       uses: actions/upload-artifact@v2.2.4
       with:
         name: mbgex2
-        path: bin\Debug\net5.0\win10-x64
+        path: src\mbgex2\bin\Debug\net5.0\win10-x64
