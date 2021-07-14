@@ -4,7 +4,7 @@ namespace mbgex2
 {
 	internal sealed class Utility
 	{
-		public Utility(UtilityLineDto dto, int accountId, DateTime date)
+		public Utility(UtilityLineDto dto, DateTime date)
 		{
 			ServiceName = dto.servicename;
 			FirmName = dto.firmname;
@@ -16,13 +16,10 @@ namespace mbgex2
 			Subs = TryParse(dto.subs);
 			Saldo = TryParse(dto.saldo);
 			PaysNew = TryParse(dto.paysnew);
-			AccountId = accountId;
 			Month = date;
 		}
 
 		private static double? TryParse(string rawValue) => double.TryParse(rawValue, out var value) ? value : default;
-
-		public int AccountId { get; }
 
 		public DateTime Month { get; }
 

@@ -7,6 +7,6 @@ namespace mbgex2
 	(
 		int AccountId,
 		DateTime Month,
-		IReadOnlyDictionary<string, UtilityLineDto> Lines
+		IReadOnlyCollection<UtilityLineDto> Lines
 	);
 }

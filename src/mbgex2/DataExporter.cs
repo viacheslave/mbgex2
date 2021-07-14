@@ -14,7 +14,7 @@ namespace mbgex2
 {
 	internal sealed class DataExporter
 	{
-		private DirectoryInfo _exportFolder;
+		public DirectoryInfo ExportFolder { get; private set; }
 
 		private readonly JsonSerializerOptions _serializerOptions = new()
 		{
@@ -37,41 +37,31 @@ namespace mbgex2
 
 			foreach (var dto in dtos)
 			{
-				var fileName = Path.Combine(
-					_exportFolder.FullName, 
-					$"raw-acc{dto.AccountId}-{dto.Month:yyyyMM}.json");
+				var fileName = Path.Combine(ExportFolder.FullName, $"raw-acc{dto.AccountId}-{dto.Month:yyyyMM}.json");
 
-				var json = JsonSerializer.Serialize(dto.Lines.Select(l => l.Value), _serializerOptions);
+				var json = JsonSerializer.Serialize(dto.Lines, _serializerOptions);
 
 				await File.WriteAllTextAsync(fileName, json);
 
 				Logger.Out($"Raw: {fileName}");
 			}
-
-			Logger.Out($"Raw export folder: {_exportFolder.FullName}");
 		}
 
 		/// <summary>
 		///		Exports data by account and utility, into CSV files
 		/// </summary>
-		/// <param name="dtos">Utilities raw data</param>
-		public void SaveByUtility(IReadOnlyCollection<UtilityLinesDto> dtos)
+		/// <param name="accounts">Accounts data</param>
+		public void SaveAccounts(IReadOnlyCollection<AccountData> accounts)
 		{
-			var csvConfiguration = new CsvConfiguration(CultureInfo.GetCultureInfo("uk-UA"))
-			{
-			};
+			var csvConfiguration = new CsvConfiguration(CultureInfo.GetCultureInfo("uk-UA"));
 
 			Logger.Out($"Exporting CSV data...");
 
-			var utilities = dtos
-				.SelectMany(dto => dto.Lines.Select(l => new Utility(l.Value, dto.AccountId, dto.Month)))
-				.ToList();
-
-			foreach (var accountGrp in utilities.GroupBy(u => u.AccountId))
+			foreach (var account in accounts)
 			{
-				var accountId = accountGrp.Key;
+				var accountId = account.AccountId;
 
-				foreach (var utilityGrp in accountGrp.GroupBy(u => u.ServiceName))
+				foreach (var utilityGrp in account.Data.GroupBy(u => u.ServiceName))
 				{
 					var utility = utilityGrp.Key;
 					var models = utilityGrp.ToList();
@@ -92,9 +82,7 @@ namespace mbgex2
 						})
 						.ToList();
 
-					var fileName = Path.Combine(
-						_exportFolder.FullName,
-						$"acc{accountId}-{utility}.csv");
+					var fileName = Path.Combine(ExportFolder.FullName, $"acc{accountId}-{utility}.csv");
 
 					using var tw = new StreamWriter(fileName);
 					using var csv = new CsvWriter(tw, csvConfiguration);
@@ -103,18 +91,16 @@ namespace mbgex2
 					csv.WriteRecords(exported);
 				}
 			}
-
-			Logger.Out($"CSV export folder: {_exportFolder.FullName}");
 		}
 
 		private void EnsureExportFolder()
 		{
 			var folder = $"export-{DateTime.Now:yyyyMMdd-HHmm}";
 
-			_exportFolder = new DirectoryInfo(folder);
+			ExportFolder = new DirectoryInfo(folder);
 
 			if (!Directory.Exists(folder))
-				_exportFolder = Directory.CreateDirectory(folder);
+				ExportFolder = Directory.CreateDirectory(folder);
 		}
 	}
 }

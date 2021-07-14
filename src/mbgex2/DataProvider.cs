@@ -56,8 +56,7 @@ namespace mbgex2
 
 			var lines = JsonSerializer.Deserialize<UtilityLineDto[]>(response);
 
-			return new UtilityLinesDto(accountId, date, 
-				lines.ToDictionary(line => line.servicename));
+			return new UtilityLinesDto(accountId, date, lines);
 		}
 	}
 }

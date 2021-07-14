@@ -34,12 +34,15 @@ namespace mbgex2
 			var options = GetOptions(args);
 
 			// get data
-			var data = await GetData(options);
+			var data = await GetRawData(options);
+			var accounts = DataTransformer.BuildAccounts(data);
 
 			// export
-			await new DataExporter().SaveRaw(data);
+			var exporter = new DataExporter();
+			await exporter.SaveRaw(data);
+			exporter.SaveAccounts(accounts);
 
-			new DataExporter().SaveByUtility(data);
+			Logger.Out($"Export folder: {exporter.ExportFolder.FullName}");
 		}
 
 		private static async Task ShowLastMonth(string[] args)
@@ -47,10 +50,11 @@ namespace mbgex2
 			var options = GetOptions(args);
 
 			// get data
-			var data = await GetData(options);
+			var data = await GetRawData(options);
+			var accounts = DataTransformer.BuildAccounts(data);
 
 			// out
-			var output = ConsoleFormatter.GetOutput(data);
+			var output = ConsoleFormatter.GetOutput(accounts);
 
 			Console.WriteLine(output);
 		}
@@ -70,7 +74,7 @@ namespace mbgex2
 			return options;
 		}
 
-		private static async Task<IReadOnlyCollection<UtilityLinesDto>> GetData(Options options)
+		private static async Task<IReadOnlyCollection<UtilityLinesDto>> GetRawData(Options options)
 		{
 			// get auth cookies
 			var authCookies = await new AuthClient()
