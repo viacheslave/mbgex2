@@ -24,7 +24,7 @@ powershell ./build.ps1
 $ make
 ```
 
-## Usage (Windows)
+## Command-Line Usage (Windows)
 
 Export since `start-date` to last month inclusive:
 ```
@@ -46,8 +46,24 @@ Show last month:
 mbgex2.exe -u <username> -p <password>
 ```
 
+## Docker
+
+In order to display latest month's info for all accounts:
+
+Build
+```
+$ docker build . -t mbgex2
+```
+
+Run
+```
+$ docker run --rm -it mbgex2
+```
+
+which prompts to enter MegaBank username/password.
+
 NOTES:
-- export is performed into `bin` folder
+- export is performed into current folder
 - the tool check first three accounts (usually users have a single one) - it's not clear how to get the accounts list
 - dates are inclusive
 - dates format preferably is `yyyy-MM-dd`, but parsing depends on your local settings
