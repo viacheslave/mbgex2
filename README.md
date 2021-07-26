@@ -7,28 +7,43 @@ This is v2, it should work with the latest [erc.megabank.ua](erc.megabank.ua) po
 ## Prerequisites
 
 - .NET 5 SDK
-- Visual Studio / Visual Studio Code
+- Windows / Linux
+- Optionally: GNU make, bash
 
-## Usage
+## Build 
+
+### Powershell
+
+```
+powershell ./build.ps1
+```
+
+### Make
+
+```
+$ make
+```
+
+## Usage (Windows)
 
 Export since `start-date` to last month inclusive:
 ```
-mbgex2.exe --export <username> <password> <start-date>
+mbgex2.exe --mode export -u <username> -p <password> --from <start-date>
 ```
 
 Export since `start-date` to `end-date` inclusive:
 ```
-mbgex2.exe --export <username> <password> <start-date> <end-date>
+mbgex2.exe --mode export -u <username> -p <password> --from <start-date> --to <end-date>
 ```
 
 Export last month:
 ```
-mbgex2.exe --export <username> <password>
+mbgex2.exe --mode export -u <username> -p <password>
 ```
 
 Show last month:
 ```
-mbgex2.exe <username> <password>
+mbgex2.exe -u <username> -p <password>
 ```
 
 NOTES:

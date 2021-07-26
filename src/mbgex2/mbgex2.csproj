@@ -4,11 +4,11 @@
 		<OutputType>Exe</OutputType>
 		<RootNamespace>mbgex2</RootNamespace>
 		<TargetFramework>net5.0</TargetFramework>
-		<PublishSingleFile>true</PublishSingleFile>
-		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+		<VersionPrefix>0.0.2</VersionPrefix>
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommandLineParser" Version="2.8.0" />
 		<PackageReference Include="CsvHelper" Version="27.1.1" />
 		<PackageReference Include="Flurl.Http" Version="3.2.0" />
 	</ItemGroup>

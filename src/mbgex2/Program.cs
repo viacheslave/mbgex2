@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using CommandLine;
 
 namespace mbgex2
 {
@@ -11,28 +11,29 @@ namespace mbgex2
     {
 			Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-			await ProcessMode(args[0], args);
+			await Parser.Default.ParseArguments<CmdOptions>(args).WithParsedAsync(async o => await ProcessMode(o));
 
       Console.WriteLine("All Done.");
     }
 
-		private static async Task ProcessMode(string option, string[] args)
+		private static async Task ProcessMode(CmdOptions options)
 		{
-			switch (option)
+			if (!CmdOptionsProcessor.Process(options))
+				return;
+
+			switch (options.Mode)
 			{
-        case "--export":
-          await ExportData(args.Skip(1).ToArray());
+        case "export":
+          await ExportData(options);
           break;
         default:
-          await ShowLastMonth(args);
+          await ShowLastMonth(options);
           break;
 			}
 		}
 
-		private static async Task ExportData(string[] args)
+		private static async Task ExportData(CmdOptions options)
 		{
-			var options = GetOptions(args);
-
 			// get data
 			var data = await GetRawData(options);
 			var accounts = DataTransformer.BuildAccounts(data);
@@ -45,10 +46,8 @@ namespace mbgex2
 			Logger.Out($"Export folder: {exporter.ExportFolder.FullName}");
 		}
 
-		private static async Task ShowLastMonth(string[] args)
+		private static async Task ShowLastMonth(CmdOptions options)
 		{
-			var options = GetOptions(args);
-
 			// get data
 			var data = await GetRawData(options);
 			var accounts = DataTransformer.BuildAccounts(data);
@@ -59,42 +58,19 @@ namespace mbgex2
 			Console.WriteLine(output);
 		}
 
-		private static Options GetOptions(string[] args)
-		{
-			var dateDefault = DateTime.Now.Date.AddMonths(-1);
-
-			var options = new Options(args[0], args[1], dateDefault, dateDefault);
-
-			if (args.Length >= 3)
-				options = options with { StartDate = DateTime.Parse(args[2]) };
-
-			if (args.Length >= 4)
-				options = options with { EndDate = DateTime.Parse(args[3]) };
-
-			return options;
-		}
-
-		private static async Task<IReadOnlyCollection<UtilityLinesDto>> GetRawData(Options options)
+		private static async Task<IReadOnlyCollection<UtilityLinesDto>> GetRawData(CmdOptions options)
 		{
 			// get auth cookies
 			var authCookies = await new AuthClient()
 				.GetAuthCookies(
-					new UserCredentials(options.Login, options.Password));
+					new UserCredentials(options.Username, options.Password));
 
 			// get data
 			var data = await new DataProvider(authCookies)
 				.Grab(
-					new Dates(options.StartDate, options.EndDate));
+					new Dates(options.Start, options.End));
 
 			return data;
 		}
-
-		private record Options
-		(
-			string Login,
-			string Password,
-			DateTime StartDate,
-			DateTime EndDate
-		);
 	}
 }
