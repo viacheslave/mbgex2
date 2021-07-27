@@ -76,7 +76,7 @@ $ docker run --rm -it mbgex2
 
 which prompts to enter MegaBank username/password.
 
-NOTES:
+## Notes
 - failed login attempts are not clearly handled by APIs, so that output data is empty.
 - export is performed into current folder
 - the tool check first three accounts (usually users have a single one) - it's not clear how to get the accounts list
