@@ -4,7 +4,7 @@
 		<OutputType>Exe</OutputType>
 		<RootNamespace>mbgex2</RootNamespace>
 		<TargetFramework>net5.0</TargetFramework>
-		<VersionPrefix>0.0.2</VersionPrefix>
+		<VersionPrefix>0.0.3</VersionPrefix>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -17,6 +17,10 @@
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
 			<_Parameter1>mbgex2.tests</_Parameter1>
 		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Properties\" />
 	</ItemGroup>
 
 </Project>

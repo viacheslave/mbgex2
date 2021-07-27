@@ -7,13 +7,16 @@ namespace mbgex2
 	{
 		public static bool Process(CmdOptions options)
 		{
-			if (string.IsNullOrEmpty(options.Username))
+			if (options.Username == null || options.Password == null)
+				Console.WriteLine("Enter you megabank credentials.");
+
+			if (options.Username == null)
 			{
 				Console.Write("Username: ");
 				options.Username = Console.ReadLine();
 			}
 
-			if (string.IsNullOrEmpty(options.Password))
+			if (options.Password == null)
 			{
 				Console.Write("Password: ");
 				options.Password = Console.ReadLine();
@@ -36,6 +39,7 @@ namespace mbgex2
 				return false;
 			}
 
+			Console.WriteLine();
 			return true;
 		}
 	}

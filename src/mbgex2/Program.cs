@@ -9,6 +9,9 @@ namespace mbgex2
   {
     async static Task Main(string[] args)
     {
+			Console.WriteLine("mbgex2 tool");
+			Console.WriteLine("--------------------");
+
 			Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 			await Parser.Default.ParseArguments<CmdOptions>(args).WithParsedAsync(async o => await ProcessMode(o));

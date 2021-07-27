@@ -4,6 +4,10 @@
 
 This is v2, it should work with the latest [erc.megabank.ua](erc.megabank.ua) portal redesign.
 
+The tool:
+- shows accounts' data for the last month
+- exports accounts' data into JSON and CSV formats for arbitrary period.
+
 ## Prerequisites
 
 - .NET 5 SDK
@@ -26,6 +30,21 @@ $ make
 
 ## Command-Line Usage (Windows)
 
+### Parameters
+
+* `-m`, `--mode`: tool's mode. Empty for console output, `export` for export
+* `-u`, `--username`: account username, required
+* `-p`, `--password`: account password, required
+* `-f`, `--from`: start date, in `yyyy-MM-dd` format, optional
+* `-t`, `--to`: end date, in `yyyy-MM-dd` format, optional
+
+## Examples
+
+Show last month:
+```
+mbgex2.exe -u <username> -p <password>
+```
+
 Export since `start-date` to last month inclusive:
 ```
 mbgex2.exe --mode export -u <username> -p <password> --from <start-date>
@@ -41,12 +60,7 @@ Export last month:
 mbgex2.exe --mode export -u <username> -p <password>
 ```
 
-Show last month:
-```
-mbgex2.exe -u <username> -p <password>
-```
-
-## Docker
+## Docker Usage
 
 In order to display latest month's info for all accounts:
 
@@ -63,11 +77,10 @@ $ docker run --rm -it mbgex2
 which prompts to enter MegaBank username/password.
 
 NOTES:
+- failed login attempts are not clearly handled by APIs, so that output data is empty.
 - export is performed into current folder
 - the tool check first three accounts (usually users have a single one) - it's not clear how to get the accounts list
-- dates are inclusive
-- dates format preferably is `yyyy-MM-dd`, but parsing depends on your local settings
-- dates should be in the following order: `start-date`, then `end-date`
+- `start-date` and `end-date` dates are inclusive
 
 ## Output
 
