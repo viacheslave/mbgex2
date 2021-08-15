@@ -9,11 +9,15 @@ using System.Text.Unicode;
 using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
+using mbgex2.Application;
+using mbgex2.Domain;
 
-namespace mbgex2
+namespace mbgex2.Infrastructure
 {
-	internal sealed class DataExporter
+	internal sealed class DataExporter : IDataExporter
 	{
+		private readonly ILogger _logger;
+
 		public DirectoryInfo ExportFolder { get; private set; }
 
 		private readonly JsonSerializerOptions _serializerOptions = new()
@@ -22,8 +26,10 @@ namespace mbgex2
 			Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
 		};
 
-		public DataExporter()
+		public DataExporter(ILogger logger)
 		{
+			_logger = logger;
+
 			EnsureExportFolder();
 		}
 
@@ -33,7 +39,7 @@ namespace mbgex2
 		/// <param name="dtos">Utilities raw data</param>
 		public async Task SaveRaw(IReadOnlyCollection<UtilityLinesDto> dtos)
 		{
-			Logger.Out($"Exporting raw data...");
+			_logger.Out($"Exporting raw data...");
 
 			foreach (var dto in dtos)
 			{
@@ -43,7 +49,7 @@ namespace mbgex2
 
 				await File.WriteAllTextAsync(fileName, json);
 
-				Logger.Out($"Raw: {fileName}");
+				_logger.Out($"Raw: {fileName}");
 			}
 		}
 
@@ -55,7 +61,7 @@ namespace mbgex2
 		{
 			var csvConfiguration = new CsvConfiguration(CultureInfo.GetCultureInfo("uk-UA"));
 
-			Logger.Out($"Exporting CSV data...");
+			_logger.Out($"Exporting CSV data...");
 
 			foreach (var account in accounts)
 			{
@@ -67,7 +73,8 @@ namespace mbgex2
 					var models = utilityGrp.ToList();
 
 					var exported = models
-						.Select(model => new UtilityLineExportDto {
+						.Select(model => new UtilityLineExportDto
+						{
 							AccountId = accountId,
 							Month = model.Month,
 							ServiceName = model.ServiceName,

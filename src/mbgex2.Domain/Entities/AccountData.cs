@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace mbgex2
+namespace mbgex2.Domain
 {
-	internal record AccountData
+	public record AccountData
 	(
 		int AccountId,
 		IReadOnlyCollection<Utility> Data

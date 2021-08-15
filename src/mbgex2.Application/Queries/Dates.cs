@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace mbgex2
+namespace mbgex2.Application
 {
-	internal sealed record Dates
+	public sealed record Dates
 	(
 		DateTime StartDate,
 		DateTime EndDate

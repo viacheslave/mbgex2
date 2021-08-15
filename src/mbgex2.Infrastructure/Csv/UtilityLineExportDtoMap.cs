@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration;
 
-namespace mbgex2
+namespace mbgex2.Infrastructure
 {
 	/// <summary>
 	///		CSV class map

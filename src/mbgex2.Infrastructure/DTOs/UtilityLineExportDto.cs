@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace mbgex2
+namespace mbgex2.Infrastructure
 {
 	/// <summary>
 	///		CSV line

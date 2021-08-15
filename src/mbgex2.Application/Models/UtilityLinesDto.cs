@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace mbgex2
+namespace mbgex2.Application
 {
 	public sealed record UtilityLinesDto
 	(

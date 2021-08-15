@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>mbgex2</RootNamespace>
+		<TargetFramework>net5.0</TargetFramework>
+		<RootNamespace>mbgex2.Application</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>mbgex2.tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\mbgex2.Domain\mbgex2.Domain.csproj" />
+	</ItemGroup>
+
+</Project>

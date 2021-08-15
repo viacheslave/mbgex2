@@ -1,4 +1,4 @@
-﻿namespace mbgex2
+﻿namespace mbgex2.Application
 {
 	public class UtilityLineDto
 	{

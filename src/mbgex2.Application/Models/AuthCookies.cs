@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace mbgex2
+namespace mbgex2.Application
 {
-	internal sealed class AuthCookies
+	public sealed class AuthCookies
 	{
 		public IReadOnlyCollection<(string name, string value)> Cookies { get; init; }
 	}
